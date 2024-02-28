@@ -1,0 +1,218 @@
+<div class="admin-container">
+    <div class="sm:px-6 w-full">
+        <div class=" mt-5 px-4 md:px-10 py-4 md:py-7">
+            <div class="flex items-center justify-between">
+                <p tabindex="0" class="focus:outline-none text-base sm:text-lg md:text-xl lg:text-2xl font-bold leading-normal text-gray-800">Registro de nuevo servicios</p>
+            </div>
+        </div>
+        <div class="flex flex-col items-center">
+            <div class="w-full mt-6 px-6 py-4 bg-white shadow-md sm:rounded-lg">
+                <form [formGroup]="form" class="mt-3 card">
+                    <div class="relative h-10 w-full">
+                        <input formControlName="nameservice" class="peer h-full w-full rounded-[7px] border border-blue-gray-200 bg-transparent px-3 py-2.5 font-sans text-sm font-normal text-blue-gray-700 outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 focus:border-2 focus:border-slate-500 focus:border-t-transparent focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50" placeholder=" "/>
+                        <label class="before:content[' '] after:content[' '] pointer-events-none absolute left-0 -top-1.5 flex h-full w-full select-none text-[11px] font-normal leading-tight text-blue-gray-400 transition-all before:pointer-events-none before:mt-[6.5px] before:mr-1 before:box-border before:block before:h-1.5 before:w-2.5 before:rounded-tl-md before:border-t before:border-l before:border-blue-gray-200 before:transition-all after:pointer-events-none after:mt-[6.5px] after:ml-1 after:box-border after:block after:h-1.5 after:w-2.5 after:flex-grow after:rounded-tr-md after:border-t after:border-r after:border-blue-gray-200 after:transition-all peer-placeholder-shown:text-sm peer-placeholder-shown:leading-[3.75] peer-placeholder-shown:text-blue-gray-500 peer-placeholder-shown:before:border-transparent peer-placeholder-shown:after:border-transparent peer-focus:text-[11px] peer-focus:leading-tight peer-focus:text-black peer-focus:before:border-t-2 peer-focus:before:border-l-2 peer-focus:before:border-slate-500 peer-focus:after:border-t-2 peer-focus:after:border-r-2 peer-focus:after:border-slate-500 peer-disabled:text-transparent peer-disabled:before:border-transparent peer-disabled:after:border-transparent peer-disabled:peer-placeholder-shown:text-blue-gray-500">Nombre del microservicio</label>
+                    </div>
+                    @if(environmentTabs.length > 0) {
+                        <ul class="flex mb-0 list-none flex-wrap pt-3 pb-4 flex-row">
+                            <li class="-mb-px mr-2 last:mr-0 flex-auto text-center">
+                              <a class="text-xs font-bold uppercase px-5 py-3 shadow-lg rounded block leading-normal" (click)="toggleTabs(0)" [ngClass]="{'text-black bg-white': openTab !== 0, 'text-red-700 bg-red-100': openTab === 0}">
+                                <i class="fas fa-space-shuttle text-base mr-1"></i> DEV
+                              </a>
+                            </li>
+                            <li class="-mb-px mr-2 last:mr-0 flex-auto text-center">
+                              <a class="text-xs font-bold uppercase px-5 py-3 shadow-lg rounded block leading-normal" (click)="toggleTabs(1)" [ngClass]="{'text-black bg-white': openTab !== 1, 'text-red-700 bg-red-100': openTab === 1}">
+                                <i class="fas fa-cog text-base mr-1"></i> QA
+                              </a>
+                            </li>
+                            <li class="-mb-px mr-2 last:mr-0 flex-auto text-center">
+                              <a class="text-xs font-bold uppercase px-5 py-3 shadow-lg rounded block leading-normal" (click)="toggleTabs(2)" [ngClass]="{'text-black bg-white': openTab !== 2, 'text-red-700 bg-red-100': openTab === 2}">
+                                <i class="fas fa-briefcase text-base mr-1"></i> PROD
+                              </a>
+                            </li>
+                            <li class="-mb-px mr-2 last:mr-0 flex-auto text-center">
+                                <a class="text-xs font-bold uppercase px-5 py-3 shadow-lg rounded block leading-normal" (click)="toggleTabs(3)" [ngClass]="{'text-black bg-white': openTab !== 3, 'text-red-700 bg-red-100': openTab === 3}">
+                                  <i class="fas fa-fire text-base mr-1"></i> HOT-FIX
+                                </a>
+                              </li>
+                              <li class="-mb-px mr-2 last:mr-0 flex-auto text-center">
+                                <a class="text-xs font-bold uppercase px-5 py-3 shadow-lg rounded block leading-normal" (click)="toggleTabs(4)" [ngClass]="{'text-black bg-white': openTab !== 4, 'text-red-700 bg-red-100': openTab === 4}">
+                                  <i class="fas fa-train text-base mr-1"></i> TRAINING
+                                </a>
+                              </li>
+                              <li class="-mb-px mr-2 last:mr-0 flex-auto text-center">
+                                <a class="text-xs font-bold uppercase px-5 py-3 shadow-lg rounded block leading-normal" (click)="toggleTabs(5)" [ngClass]="{'text-black bg-white': openTab !== 5, 'text-red-700 bg-red-100': openTab === 5}">
+                                  <i class="fas fa-hotel text-base mr-1"></i> PRE-PROD
+                                </a>
+                              </li>
+                        </ul>
+                        <ng-container formArrayName="enviroments">
+                            <div class="row mb-2 col-12">
+                                <div class="flex flex-wrap">
+                                    <div class="w-full">
+                                        <div class="relative flex flex-col min-w-0 break-words bg-white w-full mb-6 shadow-2xl rounded">
+                                            <div class="px-4 py-5 flex-auto">
+                                                <div class="tab-content tab-space" *ngFor="let item of environmentTabs.controls; index as i" [formGroupName]="i">
+                                                    <div [ngClass]="{'hidden': openTab !== i, 'block': openTab === i}">
+                                                        <h4 class="text-lg uppercase">Configuración del servicio</h4>
+                                                        <h5 class="text-xs text-slate-500">Datos del servicio</h5>
+                                                        <div class="flex mt-10">
+                                                            <div class="w-full mr-3">
+                                                                <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-first-name">
+                                                                  NAMESPACE
+                                                                </label>
+                                                                <input class="appearance-none block w-full text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" formControlName="nameSpace" type="text" placeholder="Nombre del namespace" >
+                                                            </div>
+                                                            <div class="w-full mr-3">
+                                                                <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-first-name">
+                                                                  URL ARO
+                                                                </label>
+                                                                <input class="appearance-none block w-full  text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" formControlName="url_aro" type="text" placeholder="Routa de exposición OpenShift"  >
+                                                            </div>
+                                                            <div class="w-full">
+                                                                <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-first-name">
+                                                                  URL HLB
+                                                                </label>
+                                                                <input class="appearance-none block w-full  text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" formControlName="url_hlb" type="text" placeholder="Routa de exposición pública" >
+                                                            </div>  
+                                                        </div>
+                                                        <div class="sm:px-6 w-full">
+                                                            <div class="px-4 md:px-10 py-4 md:py-7">
+                                                                <p tabindex="0" class="focus:outline-none text-base sm:text-lg md:text-xl lg:text-2xl font-bold leading-normal ">Operaciones</p>
+                                                                <div class="py-3 px-4 flex justify-end items-center text-sm font-medium leading-none cursor-pointer rounded">
+                                                                    <button (click)="addMethod(i)" class="bg-red-500 hover:bg-black text-white font-bold py-2 px-4 border-b-4 border-red-700 hover:border-red-600 rounded">
+                                                                        Agregar operación
+                                                                    </button>
+                                                                </div>
+                                                                <ng-container formArrayName="methods">
+                                                                    <div class="flex" *ngFor="let method of getMethodsTabs(i, 'methods', form)?.controls; index as j" [formGroupName]="j">
+                                                                        <div class="relative flex flex-col min-w-0 break-words bg-white w-full mb-6 shadow-lg rounded border- border-2">
+                                                                            <div class="px-4 py-5 flex-auto">
+                                                                                    <div class="flex justify-end">
+                                                                                        <button (click)="removeMethod(i,j)" class="inline-block p-3 text-center text-white transition bg-red-500 rounded-full shadow ripple hover:shadow-lg hover:bg-red-600 focus:outline-none">
+                                                                                        <svg class="w-5 h-5 text-white" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                                                                          <path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd"/>
+                                                                                        </svg>
+                                                                                      </button>
+                                                                                    </div>
+                                                                                <div class="flex mt-10">
+                                                                                    <div class="w-full mr-3">
+                                                                                        <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-first-name">
+                                                                                            Nombre
+                                                                                          </label>
+                                                                                          <input class="appearance-none block w-full text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" formControlName="name" type="text" placeholder="Nombre de la operacion" >
+                                                                                    </div>
+                                                                                    <div class="w-full mr-3">
+                                                                                        <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
+                                                                                          Tipo operación
+                                                                                        </label>
+                                                                                        <select class="w-full text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" formControlName="type">
+                                                                                            <option value="Get">Get</option>
+                                                                                            <option value="Post">Post</option>
+                                                                                            <option value="Put">Put</option>
+                                                                                            <option value="Path">Path</option>
+                                                                                            <option value="Delete">Delete</option>
+                                                                                          </select>
+                                                                                    </div>
+                                                                                    <div class="w-full mr-3">
+                                                                                        <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
+                                                                                          Ruta salesforce
+                                                                                        </label>
+                                                                                        <input class="appearance-none block w-full text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" formControlName="route_salesforce" type="text" placeholder="Nombre de la route Salesforce" >
+                                                                                    </div>
+                                                                                </div>
+                                                                                <p tabindex="0" class="focus:outline-none text-base sm:text-lg md:text-xl lg:text-2xl font-bold leading-normal ">Parámetros de seguridad</p>
+                                                                                <h5 class="text-xs text-slate-500">Información de seguridad o headers</h5>
+                                                                                <!--Arreglo Role security-->
+                                                                                <ng-container formArrayName="role_security_salesforce">
+                                                                                  <div *ngFor="let method of getRoleSecurityTabs(i, j, 'role_security_salesforce', form)?.controls; index as k" [formGroupName]="k">
+                                                                                    <div class="mt-8 bg-gray-200 border- border-2">
+                                                                                      <div class="px-4 py-5 grid grid-cols-3 gap-4 mt-10">
+                                                                                        <div class="w-full mr-3">
+                                                                                          <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
+                                                                                              Nombre
+                                                                                            </label>
+                                                                                            <input class="appearance-none block w-full text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" formControlName="name" type="text" placeholder="Nombre" >
+                                                                                        </div>
+                                                                                        <div class="w-full mr-3">
+                                                                                          <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
+                                                                                              ISS
+                                                                                            </label>
+                                                                                            <input class="appearance-none block w-full text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" formControlName="iss" type="text" placeholder="ISS" >
+                                                                                        </div>
+                                                                                        <div class="w-full mr-3">
+                                                                                          <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
+                                                                                              SUB
+                                                                                            </label>
+                                                                                            <input class="appearance-none block w-full text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" formControlName="sub" type="text" placeholder="SUB" >
+                                                                                        </div>
+                                                                                        <div class="w-full mr-3">
+                                                                                          <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
+                                                                                              AUD
+                                                                                            </label>
+                                                                                            <input class="appearance-none block w-full text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" formControlName="aud" type="text" placeholder="AUD" >
+                                                                                        </div>
+                                                                                        <div class="w-full mr-3">
+                                                                                          <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
+                                                                                              Enviroment Salesforce
+                                                                                            </label>
+                                                                                            <input class="appearance-none block w-full text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" formControlName="enviroment_salesforce" type="text" placeholder="Name enviroment Salesforce" >
+                                                                                        </div>
+                                                                                        <div class="w-full mr-3">
+                                                                                          <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
+                                                                                               Grant Type
+                                                                                            </label>
+                                                                                            <input class="appearance-none block w-full text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" formControlName="grant_type" type="text" placeholder="gran type" >
+                                                                                        </div>
+                                                                                        <div class="w-full mr-3">
+                                                                                          <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" >
+                                                                                            Authorization
+                                                                                            </label>
+                                                                                            <input class="appearance-none block w-full text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" formControlName="authorization" type="text" placeholder="Authorization" >
+                                                                                        </div>
+                                                                                        <div class="w-full mr-3">
+                                                                                          <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
+                                                                                            Url Salesforce
+                                                                                            </label>
+                                                                                            <input class="appearance-none block w-full text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" formControlName="url_salesforce" type="text" placeholder="Url salesforce" >
+                                                                                        </div>
+                                                                                        <div class="w-full mr-3">
+                                                                                          <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
+                                                                                            Cookie
+                                                                                            </label>
+                                                                                            <input class="appearance-none block w-full text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" formControlName="cookie" type="text" placeholder="Cookie" >
+                                                                                        </div>
+                                                                                        <div class="w-full mr-3">
+                                                                                          <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
+                                                                                            Key
+                                                                                            </label>
+                                                                                            <input class="appearance-none block w-full text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" formControlName="key" type="text" placeholder="Key" >
+                                                                                        </div>
+                                                                                      </div>
+                                                                                    </div>
+                                                                                  </div>
+                                                                                </ng-container>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </ng-container>
+                                                                
+                                                            </div>
+                                                        </div>
+                                                    </div>                                                    
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </ng-container>
+                    }
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="text-black">
+    <pre>{{ form.value | json  }}</pre>
+</div>

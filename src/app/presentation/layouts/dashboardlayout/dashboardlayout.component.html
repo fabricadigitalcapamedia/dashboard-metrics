@@ -1,0 +1,27 @@
+<main class="flex flex-row mt-2">
+    <nav class="hidden sm:flex flex-col w-[370px] min-h-[calc(100vh-1.0rem)] bg-red-700  p-5 rounded-lg">
+        <div class="flex justify-center">
+            <img class="" src="../../../../assets/claro-logo.png" alt="Claro" width="140" height="150">
+        </div>
+        
+        <span class="text-xl text-center mt-4 text-white">Panel de administración</span>
+        <div class="border-black border my-3 mb-10"></div>
+        <!-- Nav Links -->
+        @for (route of routes; track route.path) {
+            <app-sidebar-menu-item
+            [description]="route.data!['description']"
+            [icon]="route.data!['icon']"
+            [title]="route.data!['title']"
+            [path]="route.path!"
+            />
+        }
+        <!-- End Nav Links -->
+    </nav>
+    <section class="mx-2 flex flex-col w-full bg-white shadow-sm  p-5 rounded-lg">
+        <div class="flex h-full flex-row">
+            <div class="flex flex-col flex-auto p-1">
+                <router-outlet />
+            </div>
+        </div>
+    </section>
+</main>

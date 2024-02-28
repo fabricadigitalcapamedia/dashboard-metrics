@@ -1,0 +1,99 @@
+<div class="admin-container">
+    <div class="sm:px-6 w-full">
+        <div class="px-4 md:px-10 py-4 md:py-7">
+            <div class="flex items-center justify-between">
+                <p tabindex="0" class="focus:outline-none text-base sm:text-lg md:text-xl lg:text-2xl font-bold leading-normal text-gray-800">Listado de Miservicios</p>
+                    <div class="py-3 px-4 flex items-center text-sm font-medium leading-none text-gray-600 bg-gray-200 hover:bg-gray-300 cursor-pointer rounded">
+                        <p>Ordenar por:</p>
+                        <select aria-label="select" class="focus:text-red-600 focus:outline-none bg-transparent ml-1">
+                            <option class="text-sm text-indigo-800">Latest</option>
+                            <option class="text-sm text-indigo-800">Oldest</option>
+                            <option class="text-sm text-indigo-800">Latest</option>
+                        </select>
+                    </div>
+            </div>
+        </div>
+        <div class="bg-white py-4 md:py-7 px-4 md:px-8 xl:px-10">
+
+          
+
+            <div class="overflow-hidden rounded-lg border border-gray-200 shadow-md mt-5 mt-10">
+                <table class="w-full border-collapse bg-white text-left text-sm text-gray-500">
+                    <thead class="bg-gray-50">
+                        <tr>
+                          <th scope="col" class="px-6 py-4 font-medium text-gray-900">Nombre</th>
+                          <th scope="col" class="px-6 py-4 font-medium text-gray-900">Namespace</th>
+                          <th scope="col" class="px-6 py-4 font-medium text-gray-900">Ambientes</th>
+                          <th scope="col" class="px-6 py-4 font-medium text-gray-900">Tipo</th>
+                          <th scope="col" class="px-6 py-4 font-medium text-gray-900">Tiempo de Test</th>
+                          <th scope="col" class="px-6 py-4 font-medium text-gray-900">Acción</th>
+                        </tr>
+                      </thead>
+                      <tbody class="divide-y divide-gray-100 border-t border-gray-100">
+                        <tr class="hover:bg-gray-50" *ngFor="let item of InforServices$ | async">
+                            <td class="px-6 py-4">{{item.name_service}}</td>
+                            <td class="px-6 py-4">
+                                <span class="inline-flex items-center gap-1 rounded-full bg-black px-2 py-1 text-xs font-semibold text-red-600">
+                                  <span class="h-1.5 w-1.5 rounded-full bg-white"></span>
+                                  {{item.nameSpace}} 
+                                </span>
+                              </td>
+                              <td>
+                                <div *ngFor="let env of item.enviroments">
+                                  <span class="flex flex-col-reverse mt-1 items-center gap-1 rounded-full bg-red-50 px-2 py-1 text-xs font-semibold text-red-600">
+                                    {{env.name_enviroment}}
+                                  </span>
+                                </div>
+                              </td>
+                              <td class="px-6 py-4">{{item.category}}</td>
+                              <td>
+                                <div>
+                                  <span class="flex flex-col-reverse mt-1 items-center gap-1 rounded-full bg-green-50 px-2 py-1 text-xs font-semibold text-green-600">
+                                    1 seg - statusCode: 200
+                                  </span>
+                                </div>
+                                <div>
+                                  <span class="flex flex-col-reverse mt-1 items-center gap-1 rounded-full bg-yellow-50 px-2 py-1 text-xs font-semibold text-yellow-600">
+                                    3 seg - statusCode: 200
+                                  </span>
+                                </div>
+                                <div>
+                                  <span class="flex flex-col-reverse mt-1 items-center gap-1 rounded-full bg-orange-50 px-2 py-1 text-xs font-semibold text-orange-600">
+                                    5 seg - statusCode: 200
+                                  </span>
+                                </div>
+                                <div>
+                                  <span class="flex flex-col-reverse mt-1 items-center gap-1 rounded-full bg-red-50 px-2 py-1 text-xs font-semibold text-red-600">
+                                    10 seg - statusCode: 403
+                                  </span>
+                                </div>
+                                <div>
+                                  <span class="flex flex-col-reverse mt-1 items-center gap-1 rounded-full bg-green-50 px-2 py-1 text-xs font-semibold text-green-600">
+                                    1 seg - statusCode: 200
+                                  </span>
+                                </div>
+                              </td>
+                              <td class="px-6 py-4">
+                                <div class="flex justify-center">
+                                  <a x-data="{ tooltip: '' }" href="#">
+                                    <svg height="30px" width="30px" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" 
+                                          viewBox="0 0 60 60" xml:space="preserve">
+                                          <g>
+                                            <path d="M45.563,29.174l-22-15c-0.307-0.208-0.703-0.231-1.031-0.058C22.205,14.289,22,14.629,22,15v30
+                                            c0,0.371,0.205,0.711,0.533,0.884C22.679,45.962,22.84,46,23,46c0.197,0,0.394-0.059,0.563-0.174l22-15
+                                            C45.836,30.64,46,30.331,46,30S45.836,29.36,45.563,29.174z M24,43.107V16.893L43.225,30L24,43.107z"/>
+                                            <path d="M30,0C13.458,0,0,13.458,0,30s13.458,30,30,30s30-13.458,30-30S46.542,0,30,0z M30,58C14.561,58,2,45.439,2,30
+                                            S14.561,2,30,2s28,12.561,28,28S45.439,58,30,58z"/>
+                                          </g>
+                                </svg>
+                                  </a>
+                                </div>
+                              </td>
+                        </tr>
+                        
+                      </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
